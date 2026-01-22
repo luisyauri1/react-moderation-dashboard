@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+:root{
+  --bg-root:#0B0F14;
+  --bg-surface:#111827;
+  --bg-elevated:#1F2937;
+
+  --primary:#6366F1;
+  --primary-hover:#4F46E5;
+  --primary-soft:#A5B4FC;
+
+  --accent:#22D3EE;
+
+  --text-primary:#E5E7EB;
+  --text-secondary:#9CA3AF;
+  --text-muted:#6B7280;
+
+  --border-subtle:#1F2937;
+}
