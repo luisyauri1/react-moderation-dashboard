@@ -1,8 +1,25 @@
 import { Button, Divider } from '@/shared/ui'
+import { useState } from 'react'
 import { Link } from 'react-router'
 import { AuthField } from '../components/AuthField'
+import { useLogin } from '../hooks/useLogin'
 
 export function LoginPage() {
+  const { login, loading, error } = useLogin()
+
+  const [username, setUsername] = useState('emilys')
+  const [password, setPassword] = useState('emilyspass')
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    try {
+      await login(username, password)
+      console.log('Entro')
+    } catch {
+      // error ya queda en el hook
+    }
+  }
+
   return (
     <div className="space-y-6">
       <header>
@@ -12,9 +29,24 @@ export function LoginPage() {
         </p>
       </header>
 
-      <form className="space-y-4">
-        <AuthField label="Email" type="email" placeholder="you@example.com" />
-        <AuthField label="Password" type="password" placeholder="••••••••" />
+      <form className="space-y-4" onSubmit={onSubmit}>
+        <AuthField
+          label="Email"
+          type="text"
+          placeholder="emilys"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
+        />
+
+        <AuthField
+          label="Password"
+          type="password"
+          placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
+        />
 
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 text-(--text-secondary)">
@@ -30,8 +62,14 @@ export function LoginPage() {
           </button>
         </div>
 
-        <Button type="submit" variant="primary">
-          Sign in
+        {error && (
+          <div className="rounded-xl border border-(--border) bg-(--panel-2) px-3 py-2 text-sm text-(--danger)">
+            {error}
+          </div>
+        )}
+
+        <Button type="submit" variant="primary" disabled={loading}>
+          {loading ? 'Signing in…' : 'Sign in'}
         </Button>
 
         <Divider label="or" />
