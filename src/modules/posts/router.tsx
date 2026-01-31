@@ -5,7 +5,7 @@ import { PostsPage } from './pages/PostsPage'
 
 export const postsRoutes: RouteObject[] = [
   {
-    path: '/posts',
+    path: 'posts',
     element: <PostsLayout />,
     children: [
       { index: true, element: <PostsPage /> },

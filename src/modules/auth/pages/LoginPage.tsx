@@ -1,10 +1,11 @@
 import { Button, Divider } from '@/shared/ui'
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { AuthField } from '../components/AuthField'
 import { useLogin } from '../hooks/useLogin'
 
 export function LoginPage() {
+  const navigate = useNavigate()
   const { login, loading, error } = useLogin()
 
   const [username, setUsername] = useState('emilys')
@@ -15,6 +16,7 @@ export function LoginPage() {
     try {
       await login(username, password)
       console.log('Entro')
+      navigate('/app/posts')
     } catch {
       // error ya queda en el hook
     }

@@ -5,7 +5,7 @@ import { RegisterPage } from './pages/RegisterPage'
 
 export const authRoutes: RouteObject[] = [
   {
-    path: '/auth',
+    path: 'auth',
     element: <AuthLayout />,
     children: [
       { path: 'login', element: <LoginPage /> },

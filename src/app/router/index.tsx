@@ -1,5 +1,5 @@
 import { authRoutes } from '@/modules/auth'
-import { postsRoutes } from '@/modules/posts'
+import { shellRoutes } from '@/modules/shell'
 import { createBrowserRouter, Navigate } from 'react-router'
 
 export const router = createBrowserRouter([
@@ -8,7 +8,7 @@ export const router = createBrowserRouter([
     element: <Navigate to="/auth/login" replace />,
   },
   ...authRoutes,
-  ...postsRoutes,
+  ...shellRoutes,
   {
     path: '*',
     element: <Navigate to="/auth/login" replace />,
