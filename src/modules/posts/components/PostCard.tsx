@@ -1,11 +1,18 @@
 import { Button } from '@/shared/ui'
 import { Link } from 'react-router'
-import type { Post } from '../types/posts.types'
+
+type UiPost = {
+  id: number
+  title: string
+  body: string
+  userId: number
+  tags?: string[]
+}
 
 type Props = {
-  post: Post
+  post: UiPost
   deleting: boolean
-  onDelete: (id: number) => void
+  onDelete: (postId: number) => void
 }
 
 export function PostCard({ post, deleting, onDelete }: Props) {
