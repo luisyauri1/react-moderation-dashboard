@@ -1,9 +1,9 @@
-import type { CreatePostDto, UiPost } from '../types/post.types'
+import type { CreatePostDto, Post } from '../types/post.types'
 
 const API_URL = 'https://dummyjson.com'
 
 export const postService = {
-  async getPosts(query?: string, signal?: AbortSignal): Promise<UiPost[]> {
+  async getPosts(query?: string, signal?: AbortSignal): Promise<Post[]> {
     const url = query
       ? `${API_URL}/posts/search?q=${encodeURIComponent(query)}`
       : `${API_URL}/posts`
@@ -18,7 +18,7 @@ export const postService = {
     return data.posts || []
   },
 
-  async createPost(post: CreatePostDto): Promise<UiPost> {
+  async createPost(post: CreatePostDto): Promise<Post> {
     const response = await fetch(`${API_URL}/posts/add`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

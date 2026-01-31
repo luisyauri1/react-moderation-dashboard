@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import type { UiPost } from '../types/post.types'
+import type { Post } from '../types/post.types'
 import { postService } from '../services/post.service'
 import { useDebounce } from '../../../shared/hooks/useDebounce'
 
 export function usePosts(query = '') {
-  const [posts, setPosts] = useState<UiPost[]>([])
+  const [posts, setPosts] = useState<Post[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
 

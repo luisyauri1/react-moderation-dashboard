@@ -1,9 +1,14 @@
-export type UiPost = {
+export type Post = {
   id: number
   title: string
   body: string
   userId: number
-  tags?: string[]
+  tags: string[]
+  reactions: {
+    likes: number
+    dislikes: number
+  }
+  views: number
 }
 
 export type CreatePostDto = {

@@ -1,16 +1,9 @@
 import { GlassPanel } from '@/shared/ui'
 import { PostCard } from './PostCard'
-
-type UiPost = {
-  id: number
-  title: string
-  body: string
-  userId: number
-  tags?: string[]
-}
+import type { Post } from '../types/post.types'
 
 type Props = {
-  posts: UiPost[]
+  posts: Post[]
   deletingId: number | null
   onDelete: (postId: number) => void
   showEmpty: boolean

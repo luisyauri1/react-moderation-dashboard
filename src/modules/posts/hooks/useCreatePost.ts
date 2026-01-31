@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { CreatePostDto, UiPost } from '../types/post.types'
+import type { CreatePostDto, Post } from '../types/post.types'
 import { postService } from '../services/post.service'
 
 export function useCreatePost() {
@@ -7,7 +7,7 @@ export function useCreatePost() {
   const [error, setError] = useState<Error | null>(null)
   const [success, setSuccess] = useState(false)
 
-  const createPost = async (post: CreatePostDto): Promise<UiPost | null> => {
+  const createPost = async (post: CreatePostDto): Promise<Post | null> => {
     setIsLoading(true)
     setError(null)
     setSuccess(false)
