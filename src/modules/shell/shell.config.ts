@@ -27,21 +27,21 @@ export const shellConfig: ShellConfig = {
   brand: {
     name: 'Trust & Safety',
     accent: 'Console',
-    tagline: 'Moderation dashboard',
+    tagline: 'Content moderation console',
   },
   nav: [
-    { to: '/app/posts', label: 'Posts' },
-    { to: '/app/users', label: 'Users' },
+    { to: '/app/posts', label: 'Content' },
+    { to: '/app/users', label: 'Accounts' },
   ],
   topbar: {
-    title: 'Dashboard',
-    subtitle: 'Review activity and manage content',
+    title: 'Moderation',
+    subtitle: 'Review and manage platform activity',
   },
   footer: {
     text: 'Luis Yauri • Console',
   },
   mobile: {
     showHint: true,
-    hintText: 'Sidebar is desktop-only for now.',
+    hintText: 'Some features are available on desktop view.',
   },
 }

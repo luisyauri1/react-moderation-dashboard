@@ -26,7 +26,7 @@ export function ShellLayout() {
               </GlassPanel>
 
               {shellConfig.footer?.text && (
-                <p className="mt-4 px-2 text-xs text-(--text-muted)">
+                <p className="mt-4 px-2 text-sm text-(--text-muted)">
                   © {new Date().getFullYear()} {shellConfig.footer.text}
                 </p>
               )}
