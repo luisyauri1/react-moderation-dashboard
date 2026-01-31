@@ -4,13 +4,13 @@ import { NavLink, Outlet } from 'react-router'
 const linkBase =
   'rounded-xl px-3 py-2 text-sm transition border border-transparent'
 const linkInactive =
-  'text-(--text-secondary) hover:text-(--text) hover:bg-(--panel-2)'
-const linkActive = 'text-(--text) bg-(--panel-2) border-(--border) shadow-sm'
+  'text-(--text-secondary) hover:text-(--text-primary) hover:bg-white/5'
+const linkActive = 'bg-white/5 text-(--text-primary) border-white/10'
 
 export function PostsLayout() {
   return (
     <div className="space-y-6">
-      <header className="rounded-2xl border border-(--border) bg-(--panel) p-6 shadow-sm">
+      <header>
         <h1 className="text-2xl font-semibold tracking-tight">Posts</h1>
         <p className="mt-1 text-sm text-(--text-secondary)">
           Manage content and review posts
@@ -20,7 +20,7 @@ export function PostsLayout() {
 
         <nav className="flex flex-wrap gap-2">
           <NavLink
-            to="/posts"
+            to="/app/posts"
             end
             className={({ isActive }) =>
               `${linkBase} ${isActive ? linkActive : linkInactive}`
@@ -30,7 +30,7 @@ export function PostsLayout() {
           </NavLink>
 
           <NavLink
-            to="/posts/new"
+            to="/app/posts/new"
             className={({ isActive }) =>
               `${linkBase} ${isActive ? linkActive : linkInactive}`
             }
@@ -40,9 +40,7 @@ export function PostsLayout() {
         </nav>
       </header>
 
-      <main className="rounded-2xl border border-(--border) bg-(--panel) p-6 shadow-sm">
-        <Outlet />
-      </main>
+      <Outlet />
     </div>
   )
 }

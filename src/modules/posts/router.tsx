@@ -10,7 +10,7 @@ export const postsRoutes: RouteObject[] = [
     children: [
       { index: true, element: <PostsPage /> },
       { path: 'new', element: <PostDetailPage /> },
-      { path: ':postId', element: <PostDetailPage /> }, // por ahora misma maqueta
+      { path: ':postId', element: <PostDetailPage /> },
     ],
   },
 ]
