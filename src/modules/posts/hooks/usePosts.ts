@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import type { UiPost } from '../types/post.types'
 import { postService } from '../services/post.service'
+import { useDebounce } from '../../../shared/hooks/useDebounce'
 
-export function usePosts() {
+export function usePosts(query = '') {
   const [posts, setPosts] = useState<UiPost[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+
+  const debouncedQuery = useDebounce(query, 500)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -13,7 +16,10 @@ export function usePosts() {
     const fetchPosts = async () => {
       try {
         setIsLoading(true)
-        const data = await postService.getPosts(controller.signal)
+        const data = await postService.getPosts(
+          debouncedQuery,
+          controller.signal,
+        )
         setPosts(data)
         setError(null)
       } catch (err) {
@@ -31,7 +37,7 @@ export function usePosts() {
     return () => {
       controller.abort()
     }
-  }, [])
+  }, [debouncedQuery])
 
   return { posts, isLoading, error }
 }

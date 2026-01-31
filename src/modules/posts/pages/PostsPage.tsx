@@ -4,15 +4,9 @@ import { PostsGrid } from '../components/PostsGrid'
 import { usePosts } from '../hooks/usePosts'
 
 export function PostsPage() {
-  const { posts, isLoading } = usePosts()
   const [searchText, setSearchText] = useState('')
+  const { posts, isLoading } = usePosts(searchText)
   const [deletingId, setDeletingId] = useState<number | null>(null)
-
-  const visiblePosts = posts.filter(
-    (post) =>
-      post.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      post.body.toLowerCase().includes(searchText.toLowerCase()),
-  )
 
   const handleDelete = async (postId: number) => {
     setDeletingId(postId)
@@ -29,10 +23,10 @@ export function PostsPage() {
       />
 
       <PostsGrid
-        posts={visiblePosts}
+        posts={posts}
         deletingId={deletingId}
         onDelete={handleDelete}
-        showEmpty={!isLoading && visiblePosts.length === 0}
+        showEmpty={!isLoading && posts.length === 0}
       />
 
       {isLoading && (

@@ -3,8 +3,12 @@ import type { UiPost } from '../types/post.types'
 const API_URL = 'https://dummyjson.com'
 
 export const postService = {
-  async getPosts(signal?: AbortSignal): Promise<UiPost[]> {
-    const response = await fetch(`${API_URL}/posts`, { signal })
+  async getPosts(query?: string, signal?: AbortSignal): Promise<UiPost[]> {
+    const url = query
+      ? `${API_URL}/posts/search?q=${encodeURIComponent(query)}`
+      : `${API_URL}/posts`
+
+    const response = await fetch(url, { signal })
 
     if (!response.ok) {
       throw new Error(`Error al obtener posts: ${response.statusText}`)
