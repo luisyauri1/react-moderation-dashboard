@@ -1,4 +1,4 @@
-import type { UiPost } from '../types/post.types'
+import type { CreatePostDto, UiPost } from '../types/post.types'
 
 const API_URL = 'https://dummyjson.com'
 
@@ -16,5 +16,19 @@ export const postService = {
 
     const data = await response.json()
     return data.posts || []
+  },
+
+  async createPost(post: CreatePostDto): Promise<UiPost> {
+    const response = await fetch(`${API_URL}/posts/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(post),
+    })
+
+    if (!response.ok) {
+      throw new Error(`Error al crear el post: ${response.statusText}`)
+    }
+
+    return await response.json()
   },
 }

@@ -5,3 +5,9 @@ export type UiPost = {
   userId: number
   tags?: string[]
 }
+
+export type CreatePostDto = {
+  title: string
+  userId: number
+  body?: string
+}

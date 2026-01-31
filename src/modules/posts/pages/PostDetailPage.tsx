@@ -1,23 +1,34 @@
-import { Button, Input } from '@/shared/ui'
+import { Button, Input, GlassPanel } from '@/shared/ui'
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
+import { useCreatePost } from '../hooks/useCreatePost'
 
 export function PostDetailPage() {
-  // UI-only state (sin API)
+  const navigate = useNavigate()
+  const { createPost, isLoading: saving } = useCreatePost()
   const [title, setTitle] = useState('')
-  const [authorUserId, setAuthorUserId] = useState('5')
+  const [authorUserId, setAuthorUserId] = useState('')
   const [body, setBody] = useState('')
-  const [saving, setSaving] = useState(false)
 
-  const isNew = true // UI-only (puedes cambiarlo a false para ver el otro estado)
+  const isNew = true // UI-only
   const headerSubtitle = isNew ? 'Create a post' : 'Post detail • ID: 1'
 
-  const handlePrimaryAction = () => {
-    setSaving(true)
-    window.setTimeout(() => setSaving(false), 500)
+  const handlePrimaryAction = async () => {
+    if (isNew) {
+      await createPost({
+        title,
+        userId: Number(authorUserId),
+        body,
+      })
+    }
+  }
+
+  const handleCancel = () => {
+    navigate('/app/posts')
   }
 
   return (
-    <div className="rounded-3xl border border-(--border-subtle) bg-[rgba(17,24,39,0.60)] p-6 shadow-2xl backdrop-blur-xl">
+    <GlassPanel className="p-6">
       <header className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <h2 className="text-lg font-semibold tracking-tight text-(--text-primary)">
@@ -30,8 +41,8 @@ export function PostDetailPage() {
         </div>
 
         <div className="flex gap-2">
-          <Button variant="secondary" type="button">
-            {isNew ? 'Save draft' : 'Flag'}
+          <Button variant="secondary" type="button" onClick={handleCancel}>
+            Cancel
           </Button>
 
           <Button
@@ -70,6 +81,6 @@ export function PostDetailPage() {
           </p>
         </div>
       </div>
-    </div>
+    </GlassPanel>
   )
 }
