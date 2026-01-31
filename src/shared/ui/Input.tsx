@@ -1,23 +1,15 @@
-import * as React from 'react'
+import type { InputHTMLAttributes } from 'react'
 
-function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(' ')
-}
+type Props = InputHTMLAttributes<HTMLInputElement>
 
-export function Input({
-  className,
-  ...props
-}: React.InputHTMLAttributes<HTMLInputElement>) {
+export function Input(props: Props) {
   return (
     <input
       {...props}
-      className={cn(
-        'w-full rounded-xl border px-3 py-2.5 text-sm transition',
-        'border-(--border-subtle) bg-(--bg-elevated)',
-        'text-(--text-primary) placeholder:text-(--text-muted)',
-        'focus:outline-none focus:ring-2 focus:ring-[rgba(99,102,241,0.35)] focus:border-(--primary)',
-        className,
-      )}
+      className={
+        'w-full rounded-xl border border-(--border-subtle) bg-white/5 px-3 py-2 text-sm text-(--text-primary) outline-none placeholder:text-(--text-secondary) focus:ring-2 focus:ring-(--ring) ' +
+        (props.className ?? '')
+      }
     />
   )
 }
