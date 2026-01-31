@@ -6,11 +6,17 @@ function cn(...classes: Array<string | false | null | undefined>) {
 
 type Variant = 'primary' | 'secondary'
 
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: Variant
+  full?: boolean
+}
+
 export function Button({
   variant = 'primary',
+  full = false,
   className,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }) {
+}: ButtonProps) {
   const styles =
     variant === 'primary'
       ? cn(
@@ -26,7 +32,12 @@ export function Button({
     <button
       {...props}
       className={cn(
-        'w-full rounded-xl py-2.5 text-sm font-medium transition',
+        'inline-flex items-center justify-center gap-2',
+        'rounded-xl px-4 py-2.5',
+        'text-sm font-medium transition',
+        'whitespace-nowrap',
+        'disabled:opacity-50 disabled:cursor-not-allowed',
+        full && 'w-full',
         styles,
         className,
       )}

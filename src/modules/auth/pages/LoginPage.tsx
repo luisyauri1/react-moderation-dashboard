@@ -70,13 +70,13 @@ export function LoginPage() {
           </div>
         )}
 
-        <Button type="submit" variant="primary" disabled={loading}>
+        <Button type="submit" variant="primary" full disabled={loading}>
           {loading ? 'Signing in…' : 'Sign in'}
         </Button>
 
         <Divider label="or" />
 
-        <Button type="button" variant="secondary">
+        <Button type="button" variant="secondary" full>
           Continue with Google
         </Button>
       </form>
