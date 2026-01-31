@@ -1,44 +1,23 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { PostsToolbar } from '../components/PostsToolbar'
 import { PostsGrid } from '../components/PostsGrid'
-
-type UiPost = {
-  id: number
-  title: string
-  body: string
-  userId: number
-  tags?: string[]
-}
-
-const mockPost: UiPost = {
-  id: 1,
-  title: 'Design system notes',
-  body: 'Small notes about tokens, spacing, and component conventions.',
-  userId: 12,
-  tags: ['design', 'ui'],
-}
+import { usePosts } from '../hooks/usePosts'
 
 export function PostsPage() {
+  const { posts, isLoading } = usePosts()
   const [searchText, setSearchText] = useState('')
   const [deletingId, setDeletingId] = useState<number | null>(null)
 
-  const visiblePosts = useMemo(() => {
-    const query = searchText.trim().toLowerCase()
-    if (!query) return [mockPost]
-
-    const matches =
-      mockPost.title.toLowerCase().includes(query) ||
-      mockPost.body.toLowerCase().includes(query) ||
-      (mockPost.tags ?? []).some((tag) => tag.toLowerCase().includes(query)) ||
-      String(mockPost.userId).includes(query)
-
-    return matches ? [mockPost] : []
-  }, [searchText])
+  const visiblePosts = posts.filter(
+    (post) =>
+      post.title.toLowerCase().includes(searchText.toLowerCase()) ||
+      post.body.toLowerCase().includes(searchText.toLowerCase()),
+  )
 
   const handleDelete = async (postId: number) => {
-    // UI-only: simula “deleting…”
     setDeletingId(postId)
-    window.setTimeout(() => setDeletingId(null), 450)
+    // TODO: Connect to API
+    setDeletingId(null)
   }
 
   return (
@@ -53,8 +32,14 @@ export function PostsPage() {
         posts={visiblePosts}
         deletingId={deletingId}
         onDelete={handleDelete}
-        showEmpty={visiblePosts.length === 0}
+        showEmpty={!isLoading && visiblePosts.length === 0}
       />
+
+      {isLoading && (
+        <div className="flex justify-center py-8 text-slate-500">
+          Cargando posts...
+        </div>
+      )}
     </div>
   )
 }
