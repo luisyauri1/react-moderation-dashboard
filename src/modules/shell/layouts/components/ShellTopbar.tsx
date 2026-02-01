@@ -1,4 +1,5 @@
 import { Button } from '@/shared/ui'
+import { useNavigate } from 'react-router'
 import type { ShellConfig } from '../../shell.config'
 
 type Props = {
@@ -6,6 +7,14 @@ type Props = {
 }
 
 export function ShellTopbar({ topbar }: Props) {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('auth_token')
+    localStorage.removeItem('refresh_token')
+    navigate('/login')
+  }
+
   return (
     <div className="flex items-center justify-between gap-6">
       <div className="min-w-0">
@@ -21,7 +30,7 @@ export function ShellTopbar({ topbar }: Props) {
       </div>
 
       <div className="flex items-center gap-3">
-        <Button variant="secondary" type="button">
+        <Button variant="secondary" type="button" onClick={handleLogout}>
           Logout
         </Button>
       </div>

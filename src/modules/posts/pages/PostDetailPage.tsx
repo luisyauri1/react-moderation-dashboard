@@ -36,11 +36,19 @@ export function PostDetailPage() {
 
   const handlePrimaryAction = async () => {
     if (isNew) {
-      await createPost({
+      const result = await createPost({
         title: form.title,
         userId: Number(form.authorUserId),
         body: form.body,
       })
+
+      if (result) {
+        setShowSuccess(true)
+
+        setTimeout(() => {
+          navigate('/app/posts')
+        }, 2000)
+      }
     } else {
       const result = await updatePost(Number(postId), {
         title: form.title,
@@ -49,12 +57,10 @@ export function PostDetailPage() {
       })
 
       if (result) {
-        // Limpiar edits y navegar a modo visualización
         setEdits({})
         setShowSuccess(true)
         navigate(`/app/posts/${postId}`)
 
-        // Ocultar mensaje de éxito después de 3 segundos
         setTimeout(() => setShowSuccess(false), 3000)
       }
     }
@@ -70,7 +76,6 @@ export function PostDetailPage() {
     if (isNew) {
       navigate('/app/posts')
     } else {
-      // Cancelar edición: limpiar cambios y navegar a modo visualización
       setEdits({})
       navigate(`/app/posts/${postId}`)
     }
@@ -106,7 +111,6 @@ export function PostDetailPage() {
         </div>
 
         <div className="flex gap-2">
-          {/* Modo Visualización: Botones Back y Edit */}
           {!isNew && !isEditMode && (
             <>
               <Button variant="secondary" type="button" onClick={handleBack}>
@@ -118,7 +122,6 @@ export function PostDetailPage() {
             </>
           )}
 
-          {/* Modo Edición o Nuevo: Botones Cancel y Save/Publish */}
           {(isNew || isEditMode) && (
             <>
               <Button variant="secondary" type="button" onClick={handleCancel}>
@@ -138,14 +141,22 @@ export function PostDetailPage() {
         </div>
       </header>
 
-      {/* Success Message */}
       {showSuccess && (
         <div className="mt-4 animate-fade-in rounded-xl bg-gradient-to-r from-emerald-500/20 to-green-500/20 p-4 ring-1 ring-emerald-500/30">
           <div className="flex items-center gap-2">
             <span className="text-2xl">✅</span>
-            <p className="font-medium text-emerald-300">
-              Post updated successfully!
-            </p>
+            <div>
+              <p className="font-medium text-emerald-300">
+                {isNew
+                  ? 'Post created successfully!'
+                  : 'Post updated successfully!'}
+              </p>
+              {isNew && (
+                <p className="mt-1 text-xs text-emerald-400/70">
+                  Redirecting to posts list...
+                </p>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -165,7 +176,6 @@ export function PostDetailPage() {
           disabled={!isNew && !isEditMode}
         />
 
-        {/* Tags Section - Solo visible cuando hay un post existente */}
         {!isNew && post && post.tags && post.tags.length > 0 && (
           <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
             <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-(--text-secondary)">
@@ -196,7 +206,6 @@ export function PostDetailPage() {
             disabled={!isNew && !isEditMode}
           />
 
-          {/* Stats Section - Solo visible cuando hay un post existente */}
           {!isNew && post && (
             <div className="mt-4 grid grid-cols-3 gap-4 border-t border-white/5 pt-4">
               <div className="flex flex-col items-center gap-1">

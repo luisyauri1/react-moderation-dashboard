@@ -15,13 +15,11 @@ export function useCreatePost() {
     try {
       const result = await postService.createPost(post)
       setSuccess(true)
-      console.log('Post creado exitosamente:', result)
       return result
     } catch (err) {
       const errorObject =
         err instanceof Error ? err : new Error('Error desconocido')
       setError(errorObject)
-      console.error('Error al crear post:', errorObject)
       return null
     } finally {
       setIsLoading(false)

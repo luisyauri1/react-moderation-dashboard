@@ -29,10 +29,7 @@ export const shellConfig: ShellConfig = {
     accent: 'Console',
     tagline: 'Content moderation console',
   },
-  nav: [
-    { to: '/app/posts', label: 'Content' },
-    { to: '/app/users', label: 'Accounts' },
-  ],
+  nav: [{ to: '/app/posts', label: 'Content' }],
   topbar: {
     title: 'Moderation',
     subtitle: 'Review and manage platform activity',

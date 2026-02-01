@@ -13,13 +13,8 @@ export function LoginPage() {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    try {
-      await login(username, password)
-      console.log('Entro')
-      navigate('/app/posts')
-    } catch {
-      // error ya queda en el hook
-    }
+    await login(username, password)
+    navigate('/app/posts')
   }
 
   return (

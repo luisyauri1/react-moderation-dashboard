@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { authApi } from '../services/authApi'
+import { authService } from '../services/auth.service'
 import type { LoginResponse } from '../types/auth'
 
 export function useLogin() {
@@ -23,13 +23,13 @@ export function useLogin() {
       setLoading(true)
       setError(null)
 
-      const data: LoginResponse = await authApi.login(
+      const data: LoginResponse = await authService.login(
         { username, password, expiresInMins: 30 },
         controller.signal,
       )
 
-      localStorage.setItem('accessToken', data.accessToken)
-      localStorage.setItem('refreshToken', data.refreshToken)
+      localStorage.setItem('auth_token', data.accessToken)
+      localStorage.setItem('refresh_token', data.refreshToken)
 
       return data
     } catch (e) {
