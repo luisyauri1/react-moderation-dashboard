@@ -7,7 +7,7 @@ export function Input(props: Props) {
     <input
       {...props}
       className={
-        'w-full rounded-xl border border-(--border-subtle) bg-white/5 px-3 py-2 text-sm text-(--text-primary) outline-none placeholder:text-(--text-secondary) focus:ring-2 focus:ring-(--ring) ' +
+        'w-full rounded-xl border border-(--border-subtle) bg-white/5 px-3 py-2 text-sm text-(--text-primary) outline-none placeholder:text-(--text-secondary) focus:ring-2 focus:ring-(--ring) disabled:cursor-not-allowed disabled:opacity-60 ' +
         (props.className ?? '')
       }
     />

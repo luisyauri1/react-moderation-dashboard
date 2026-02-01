@@ -1,4 +1,4 @@
-import type { CreatePostDto, Post } from '../types/post.types'
+import type { CreatePostDto, Post, UpdatePostDto } from '../types/post.types'
 
 const API_URL = 'https://dummyjson.com'
 
@@ -37,6 +37,20 @@ export const postService = {
 
     if (!response.ok) {
       throw new Error(`Error al crear el post: ${response.statusText}`)
+    }
+
+    return await response.json()
+  },
+
+  async updatePost(postId: number, post: UpdatePostDto): Promise<Post> {
+    const response = await fetch(`${API_URL}/posts/${postId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(post),
+    })
+
+    if (!response.ok) {
+      throw new Error(`Error al actualizar el post: ${response.statusText}`)
     }
 
     return await response.json()

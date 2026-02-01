@@ -17,6 +17,12 @@ export type CreatePostDto = {
   body?: string
 }
 
+export type UpdatePostDto = {
+  title?: string
+  body?: string
+  userId?: number
+}
+
 export type PostForm = {
   title: string
   authorUserId: string

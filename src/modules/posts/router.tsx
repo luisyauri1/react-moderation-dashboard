@@ -11,6 +11,7 @@ export const postsRoutes: RouteObject[] = [
       { index: true, element: <PostsPage /> },
       { path: 'new', element: <PostDetailPage /> },
       { path: ':postId', element: <PostDetailPage /> },
+      { path: ':postId/edit', element: <PostDetailPage /> },
     ],
   },
 ]

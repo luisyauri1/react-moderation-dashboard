@@ -76,7 +76,7 @@ export function PostCard({ post, deleting, onDelete }: Props) {
               View
             </Button>
           </Link>
-          <Link to={`/app/posts/${post.id}`} className="flex-1">
+          <Link to={`/app/posts/${post.id}/edit`} className="flex-1">
             <Button variant="secondary" className="w-full text-xs py-1.5">
               Edit
             </Button>
