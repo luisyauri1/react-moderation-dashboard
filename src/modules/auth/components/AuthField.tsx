@@ -4,8 +4,8 @@ type AuthFieldProps = {
   label: string
   type?: string
   placeholder?: string
-  value: string
-  onChange: React.ChangeEventHandler<HTMLInputElement>
+  value?: string
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
   autoComplete?: string
 }
 

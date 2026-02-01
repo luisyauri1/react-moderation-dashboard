@@ -1,4 +1,4 @@
-import { Button, Divider } from '@/shared/ui'
+import { Button, Divider, Toast } from '@/shared/ui'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { AuthField } from '../components/AuthField'
@@ -10,11 +10,18 @@ export function LoginPage() {
 
   const [username, setUsername] = useState('emilys')
   const [password, setPassword] = useState('emilyspass')
+  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     await login(username, password)
     navigate('/app/posts')
+  }
+
+  const handleFeatureInProgress = (feature: string) => {
+    setToastMessage(`${feature} - Coming soon!`)
+    setShowToast(true)
   }
 
   return (
@@ -47,13 +54,18 @@ export function LoginPage() {
 
         <div className="flex items-center justify-between text-sm">
           <label className="flex items-center gap-2 text-(--text-secondary)">
-            <input type="checkbox" className="accent-(--primary)" />
+            <input
+              type="checkbox"
+              className="accent-(--primary)"
+              onChange={() => handleFeatureInProgress('Remember me')}
+            />
             Remember me
           </label>
 
           <button
             type="button"
             className="text-(--primary-soft) hover:text-(--primary) transition"
+            onClick={() => handleFeatureInProgress('Forgot password')}
           >
             Forgot password?
           </button>
@@ -65,20 +77,33 @@ export function LoginPage() {
           </div>
         )}
 
+        {showToast && (
+          <Toast
+            message={toastMessage}
+            type="info"
+            onClose={() => setShowToast(false)}
+          />
+        )}
+
         <Button type="submit" variant="primary" full disabled={loading}>
           {loading ? 'Signing in…' : 'Sign in'}
         </Button>
 
         <Divider label="or" />
 
-        <Button type="button" variant="secondary" full>
+        <Button
+          type="button"
+          variant="secondary"
+          full
+          onClick={() => handleFeatureInProgress('Continue with Google')}
+        >
           Continue with Google
         </Button>
       </form>
 
       <footer>
         <p className="text-center text-sm text-(--text-secondary)">
-          Don’t have an account?{' '}
+          Don't have an account?{' '}
           <Link
             to="/auth/register"
             className="text-(--primary-soft) hover:text-(--primary) transition"
