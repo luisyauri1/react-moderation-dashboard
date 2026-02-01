@@ -1,73 +1,123 @@
-# React + TypeScript + Vite
+# React Moderation Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![GitHub Pages](https://img.shields.io/badge/demo-live-success?style=flat-square&logo=github)](https://luisyauri1.github.io/react-moderation-dashboard/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 
-Currently, two official plugins are available:
+A modern, beautiful content moderation dashboard built with React, TypeScript, and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> 🚀 **[Live Demo](https://luisyauri1.github.io/react-moderation-dashboard/)**
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- ✅ **Authentication** - Login and registration with route guards
+- ✅ **Post Management** - Full CRUD operations for posts
+- ✅ **View/Edit Modes** - URL-based mode switching
+- ✅ **Toast Notifications** - Beautiful feedback system
+- ✅ **Protected Routes** - Secure authentication flow
+- ✅ **Modern UI** - Premium design with glassmorphism
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **React 19** - UI library
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **React Router** - Navigation
+- **DummyJSON API** - Backend
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🌐 GitHub Pages Deployment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This project is automatically deployed to GitHub Pages using GitHub Actions.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Setup Instructions:
+
+1. **Enable GitHub Pages**:
+   - Go to your repository settings
+   - Navigate to **Pages** section
+   - Under **Source**, select **GitHub Actions**
+
+2. **Push to main branch**:
+
+   ```bash
+   git push origin main
+   ```
+
+3. **Access your site**:
+   - Your site will be available at: `https://luisyauri1.github.io/react-moderation-dashboard/`
+
+### Manual Deployment:
+
+If you prefer to deploy manually:
+
+```bash
+# Build the project
+npm run build
+
+# Deploy to gh-pages branch
+npm run deploy
 ```
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   └── router/          # Route configuration and guards
+├── modules/
+│   ├── auth/           # Authentication module
+│   ├── posts/          # Posts management module
+│   └── shell/          # App shell and layout
+├── shared/
+│   ├── ui/             # Reusable UI components
+│   └── hooks/          # Custom React hooks
+└── styles/             # Global styles
+```
+
+## 🔐 Authentication
+
+Default credentials for testing:
+
+- **Username**: `emilys`
+- **Password**: `emilyspass`
+
+## 🎨 UI Components
+
+- `Button` - Primary and secondary variants
+- `Input` - Form input with disabled states
+- `Toast` - Notification system (info, success, warning, error)
+- `GlassPanel` - Glassmorphism container
+- `Divider` - Section separator
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👤 Author
+
+**Luis Yauri**
+
+- GitHub: [@luisyauri1](https://github.com/luisyauri1)
+- Repository: [react-moderation-dashboard](https://github.com/luisyauri1/react-moderation-dashboard)
+
+---
+
+Made with ❤️ using React, TypeScript, and Tailwind CSS
