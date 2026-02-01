@@ -100,22 +100,68 @@ export function PostDetailPage() {
           onChange={(e) => updateField('authorUserId', e.target.value)}
         />
 
+        {/* Tags Section - Solo visible cuando hay un post existente */}
+        {!isNew && post && post.tags && post.tags.length > 0 && (
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-(--text-secondary)">
+              Tags
+            </label>
+            <div className="flex flex-wrap gap-2">
+              {post.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="rounded-full bg-gradient-to-r from-violet-500/20 to-fuchsia-500/20 px-3 py-1 text-xs font-medium text-violet-300 ring-1 ring-violet-500/30"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-(--text-secondary)">
+            Content
+          </label>
           <textarea
             className="min-h-40 w-full resize-none bg-transparent text-sm text-(--text-primary) outline-none placeholder:text-(--text-secondary)"
-            placeholder="Body..."
+            placeholder="Write your post content here..."
             value={form.body}
             onChange={(e) => updateField('body', e.target.value)}
           />
+
+          {/* Stats Section - Solo visible cuando hay un post existente */}
           {!isNew && post && (
-            <div className="mt-4 flex gap-6 border-t border-white/5 pt-4 text-[11px] font-semibold text-(--text-secondary)">
-              <span className="text-emerald-400">
-                👍 {post.reactions.likes} likes
-              </span>
-              <span className="text-rose-400">
-                👎 {post.reactions.dislikes} dislikes
-              </span>
-              <span className="text-blue-400">👁️ {post.views} views</span>
+            <div className="mt-4 grid grid-cols-3 gap-4 border-t border-white/5 pt-4">
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xl">👍</span>
+                <span className="text-lg font-bold text-emerald-400">
+                  {post.reactions.likes}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-(--text-secondary)">
+                  Likes
+                </span>
+              </div>
+
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xl">👎</span>
+                <span className="text-lg font-bold text-rose-400">
+                  {post.reactions.dislikes}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-(--text-secondary)">
+                  Dislikes
+                </span>
+              </div>
+
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-2xl">👁️</span>
+                <span className="text-lg font-bold text-blue-400">
+                  {post.views.toLocaleString()}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-(--text-secondary)">
+                  Views
+                </span>
+              </div>
             </div>
           )}
         </div>
