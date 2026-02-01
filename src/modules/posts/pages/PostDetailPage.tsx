@@ -5,8 +5,6 @@ import { useCreatePost } from '../hooks/useCreatePost'
 import { usePost } from '../hooks/usePost'
 import type { PostForm } from '../types/post.types'
 
-const emptyForm: PostForm = { title: '', authorUserId: '', body: '' }
-
 export function PostDetailPage() {
   const { postId } = useParams()
   const navigate = useNavigate()
@@ -17,22 +15,20 @@ export function PostDetailPage() {
   const { createPost, isLoading: saving } = useCreatePost()
   const { post, isLoading: loadingPost } = usePost(isNew ? undefined : postId)
 
-  const [form, setForm] = useState<PostForm>(emptyForm)
+  const [edits, setEdits] = useState<Partial<PostForm>>({})
 
-  // useEffect(() => {
-  //   if (isNew) {
-  //     setForm(emptyForm)
-  //     return
-  //   }
+  const form: PostForm = {
+    title: edits.title ?? post?.title ?? '',
+    authorUserId: edits.authorUserId ?? String(post?.userId ?? ''),
+    body: edits.body ?? post?.body ?? '',
+  }
 
-  //   if (!post) return
-
-  //   setForm({
-  //     title: post.title ?? '',
-  //     authorUserId: String(post.userId ?? ''),
-  //     body: post.body ?? '',
-  //   })
-  // }, [isNew, postId, post])
+  const updateField = <K extends keyof PostForm>(
+    field: K,
+    value: PostForm[K],
+  ) => {
+    setEdits((prev) => ({ ...prev, [field]: value }))
+  }
 
   const handlePrimaryAction = async () => {
     if (isNew) {
@@ -95,13 +91,13 @@ export function PostDetailPage() {
         <Input
           placeholder="Title"
           value={form.title}
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
+          onChange={(e) => updateField('title', e.target.value)}
         />
 
         <Input
           placeholder="Author (userId)"
           value={form.authorUserId}
-          onChange={(e) => setForm({ ...form, authorUserId: e.target.value })}
+          onChange={(e) => updateField('authorUserId', e.target.value)}
         />
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -109,7 +105,7 @@ export function PostDetailPage() {
             className="min-h-40 w-full resize-none bg-transparent text-sm text-(--text-primary) outline-none placeholder:text-(--text-secondary)"
             placeholder="Body..."
             value={form.body}
-            onChange={(e) => setForm({ ...form, body: e.target.value })}
+            onChange={(e) => updateField('body', e.target.value)}
           />
           {!isNew && post && (
             <div className="mt-4 flex gap-6 border-t border-white/5 pt-4 text-[11px] font-semibold text-(--text-secondary)">
