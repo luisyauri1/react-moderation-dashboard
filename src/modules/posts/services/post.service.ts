@@ -18,6 +18,16 @@ export const postService = {
     return data.posts || []
   },
 
+  async getPostById(postId: number, signal?: AbortSignal): Promise<Post> {
+    const response = await fetch(`${API_URL}/posts/${postId}`, { signal })
+
+    if (!response.ok) {
+      throw new Error(`Error al obtener el post: ${response.statusText}`)
+    }
+
+    return await response.json()
+  },
+
   async createPost(post: CreatePostDto): Promise<Post> {
     const response = await fetch(`${API_URL}/posts/add`, {
       method: 'POST',

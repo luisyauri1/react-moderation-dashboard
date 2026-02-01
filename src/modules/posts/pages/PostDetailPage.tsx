@@ -1,30 +1,65 @@
 import { Button, Input, GlassPanel } from '@/shared/ui'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { useCreatePost } from '../hooks/useCreatePost'
+import { usePost } from '../hooks/usePost'
+import type { PostForm } from '../types/post.types'
+
+const emptyForm: PostForm = { title: '', authorUserId: '', body: '' }
 
 export function PostDetailPage() {
+  const { postId } = useParams()
   const navigate = useNavigate()
-  const { createPost, isLoading: saving } = useCreatePost()
-  const [title, setTitle] = useState('')
-  const [authorUserId, setAuthorUserId] = useState('')
-  const [body, setBody] = useState('')
 
-  const isNew = true // UI-only
-  const headerSubtitle = isNew ? 'Create a post' : 'Post detail • ID: 1'
+  const isNew = !postId || postId === 'new'
+  const headerSubtitle = isNew ? 'Create a post' : `Post detail • ID: ${postId}`
+
+  const { createPost, isLoading: saving } = useCreatePost()
+  const { post, isLoading: loadingPost } = usePost(isNew ? undefined : postId)
+
+  const [form, setForm] = useState<PostForm>(emptyForm)
+
+  // useEffect(() => {
+  //   if (isNew) {
+  //     setForm(emptyForm)
+  //     return
+  //   }
+
+  //   if (!post) return
+
+  //   setForm({
+  //     title: post.title ?? '',
+  //     authorUserId: String(post.userId ?? ''),
+  //     body: post.body ?? '',
+  //   })
+  // }, [isNew, postId, post])
 
   const handlePrimaryAction = async () => {
     if (isNew) {
       await createPost({
-        title,
-        userId: Number(authorUserId),
-        body,
+        title: form.title,
+        userId: Number(form.authorUserId),
+        body: form.body,
+      })
+    } else {
+      console.log('Update logic not implemented yet, but current data is:', {
+        title: form.title,
+        userId: form.authorUserId,
+        body: form.body,
       })
     }
   }
 
   const handleCancel = () => {
     navigate('/app/posts')
+  }
+
+  if (loadingPost) {
+    return (
+      <GlassPanel className="p-12 text-center text-slate-500">
+        Cargando datos del post...
+      </GlassPanel>
+    )
   }
 
   return (
@@ -49,9 +84,9 @@ export function PostDetailPage() {
             variant="primary"
             type="button"
             onClick={handlePrimaryAction}
-            disabled={saving || title.trim().length === 0}
+            disabled={saving || form.title.trim().length === 0}
           >
-            {saving ? 'Saving...' : isNew ? 'Publish' : 'Save'}
+            {saving ? 'Saving...' : isNew ? 'Publish' : 'Save changes'}
           </Button>
         </div>
       </header>
@@ -59,26 +94,34 @@ export function PostDetailPage() {
       <div className="mt-5 space-y-3">
         <Input
           placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={form.title}
+          onChange={(e) => setForm({ ...form, title: e.target.value })}
         />
 
         <Input
           placeholder="Author (userId)"
-          value={authorUserId}
-          onChange={(e) => setAuthorUserId(e.target.value)}
+          value={form.authorUserId}
+          onChange={(e) => setForm({ ...form, authorUserId: e.target.value })}
         />
 
         <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
           <textarea
             className="min-h-40 w-full resize-none bg-transparent text-sm text-(--text-primary) outline-none placeholder:text-(--text-secondary)"
             placeholder="Body..."
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+            value={form.body}
+            onChange={(e) => setForm({ ...form, body: e.target.value })}
           />
-          <p className="mt-2 text-xs text-(--text-secondary)">
-            Editor placeholder (textarea for now)
-          </p>
+          {!isNew && post && (
+            <div className="mt-4 flex gap-6 border-t border-white/5 pt-4 text-[11px] font-semibold text-(--text-secondary)">
+              <span className="text-emerald-400">
+                👍 {post.reactions.likes} likes
+              </span>
+              <span className="text-rose-400">
+                👎 {post.reactions.dislikes} dislikes
+              </span>
+              <span className="text-blue-400">👁️ {post.views} views</span>
+            </div>
+          )}
         </div>
       </div>
     </GlassPanel>

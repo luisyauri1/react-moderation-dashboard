@@ -16,3 +16,9 @@ export type CreatePostDto = {
   userId: number
   body?: string
 }
+
+export type PostForm = {
+  title: string
+  authorUserId: string
+  body: string
+}
