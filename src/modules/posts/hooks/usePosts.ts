@@ -39,5 +39,5 @@ export function usePosts(query = '') {
     }
   }, [debouncedQuery])
 
-  return { posts, isLoading, error }
+  return { posts, setPosts, isLoading, error }
 }

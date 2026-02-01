@@ -2,15 +2,23 @@ import { useState } from 'react'
 import { PostsToolbar } from '../components/PostsToolbar'
 import { PostsGrid } from '../components/PostsGrid'
 import { usePosts } from '../hooks/usePosts'
+import { useDeletePost } from '../hooks/useDeletePost'
 
 export function PostsPage() {
   const [searchText, setSearchText] = useState('')
-  const { posts, isLoading } = usePosts(searchText)
+  const { posts, isLoading, setPosts } = usePosts(searchText)
+  const { deletePost } = useDeletePost()
   const [deletingId, setDeletingId] = useState<number | null>(null)
 
   const handleDelete = async (postId: number) => {
     setDeletingId(postId)
-    // TODO: Connect to API
+
+    const success = await deletePost(postId)
+
+    if (success) {
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId))
+    }
+
     setDeletingId(null)
   }
 

@@ -55,4 +55,18 @@ export const postService = {
 
     return await response.json()
   },
+
+  async deletePost(
+    postId: number,
+  ): Promise<{ id: number; isDeleted: boolean }> {
+    const response = await fetch(`${API_URL}/posts/${postId}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      throw new Error(`Error al eliminar el post: ${response.statusText}`)
+    }
+
+    return await response.json()
+  },
 }

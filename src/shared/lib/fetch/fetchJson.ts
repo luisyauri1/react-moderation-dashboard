@@ -1,5 +1,3 @@
-// src/shared/lib/fetch/fetchJson.ts
-
 type ErrorPayload = {
   message?: unknown
   error?: unknown
