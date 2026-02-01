@@ -1,11 +1,11 @@
 import { authRoutes } from '@/modules/auth'
 import { shellRoutes } from '@/modules/shell'
-import { createBrowserRouter } from 'react-router'
+import { createHashRouter } from 'react-router'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { RootRedirect } from './RootRedirect'
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: '/',
     element: <RootRedirect />,
